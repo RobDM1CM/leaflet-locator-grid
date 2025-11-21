@@ -31,32 +31,33 @@
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <!-- Your plugin JS -->
+  <!-- Plugin JS -->
   <script src="../dist/locator-grid-leaflet.js"></script>
 
-  <script>
-  // --- Basic Map ---
-  const map = L.map("map", {
-      center: [51.5, -0.12],    // London
-      zoom: 5
-  });
-
-  // --- Basemap ---
-  const osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: "&copy; OpenStreetMap contributors"
-  }).addTo(map);
-
-  // --- Locator Grid ---
-  const locGrid = new L.LocatorGrid();
-  locGrid.addTo(map);
-
-  // --- Optionally include in layers control ---
-  const baseMaps = { "OpenStreetMap": osm };
-  const overlays = { "Locator Grid": locGrid };
-
-  L.control.layers(baseMaps, overlays).addTo(map);
+    <script>
+    // --- Basic Map ---
+    const map = L.map("map", {
+        center: [51.5, -0.12],    // London
+        zoom: 5
+    });
+  
+    // --- Basemap ---
+    const osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(map);
+  
+    // --- Locator Grid ---
+    const locGrid = new L.LocatorGrid();
+    locGrid.addTo(map);
+  
+    // --- Optionally include in layers control ---
+    const baseMaps = { "OpenStreetMap": osm };
+    const overlays = { "Locator Grid": locGrid };
+  
+    L.control.layers(baseMaps, overlays).addTo(map);
   </script>
 
 </body>
 </html>
+
