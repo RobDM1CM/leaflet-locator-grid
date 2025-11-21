@@ -22,8 +22,8 @@ Designed for radio amateurs, SOTA/IOTA mapping, portable-ops tools, contesting, 
 <link rel="stylesheet" href="leaflet.css">
 <script src="leaflet.js"></script>
 
-<script src="leaflet-locator-grid.js"></script>
-<link rel="stylesheet" href="leaflet-locator-grid.css">
+<script src="locator-grid-leaflet.js"></script>
+<link rel="stylesheet" href="locator-grid-leaflet.css">
 ```
 
 ## Usage
