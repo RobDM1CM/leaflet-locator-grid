@@ -8,10 +8,10 @@ Designed for radio amateurs, SOTA/IOTA mapping, portable-ops tools, contesting, 
 ## Features
 
 - Draws Maidenhead blocks at different levels of detail depending on zoom:
-  - Fields (e.g. "JN")
-  - Squares (e.g. "JN53")
-  - Subsquares (e.g. "JN53sn")
-  - Extended squares (e.g. "JN53sn47")    
+  - 2-character Fields (e.g. "JN")
+  - 4-character Squares (e.g. "JN53")
+  - 6-character Subsquares (e.g. "JN53sn")
+  - 8-character Extended squares (e.g. "JN53sn47")    
 - Smooth “parachute redraw” logic to avoid flicker and double-rendering.
 - Works across the antemeridian / date line (_at least as well as Leaflet can manage!_).
 - Pure Leaflet—no external libraries.
