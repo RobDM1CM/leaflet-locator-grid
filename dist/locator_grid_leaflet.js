@@ -466,7 +466,7 @@
 
     /******************************************************/
     _addLatLine(lineY, xl, xr, thk) {
-        const div = L.DomUtil.create('div', 'xxx', this._container);
+        const div = L.DomUtil.create('div', 'locator-grid-label', this._container);
         div.style.left = this._npx(xl);
         div.style.top = this._npx(lineY - Math.floor(thk / 2));
         div.style.width = this._npx(xr - xl);
@@ -478,7 +478,7 @@
 
     /******************************************************/
     _addLngLine(lineX, yt, yb, thk) {
-        const div = L.DomUtil.create('div', 'xxx', this._container);
+        const div = L.DomUtil.create('div', 'locator-grid-label', this._container);
         div.style.left = this._npx(lineX - Math.floor(thk / 2));
         div.style.top = this._npx(yt);
         div.style.width = this._npx(thk);
@@ -611,5 +611,6 @@
   L.locatorGrid = function () {
     return new L.LocatorGrid();
   };
+
 
 
