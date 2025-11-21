@@ -67,7 +67,7 @@ Removes all grid elements and event listeners.
 
 - Redraw fires only on moveend, not on every pan step.
 - Zoom work is batched to avoid the “double-opacity” issue common in DOM-based layers.
-- Antemeridian drawing is handled gracefully but may show minor artifacts depending on the base map — inherent to Leaflet.
+- Antemeridian drawing is handled gracefully but may show minor artifacts depending on the base map — a minor problem inherent to Leaflet.
 
 ## License
 
