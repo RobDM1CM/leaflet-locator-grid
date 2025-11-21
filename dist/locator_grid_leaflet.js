@@ -42,11 +42,9 @@
 
 
     /******************************************************/
-    // <-- THIS IS THE MAGIC FOR AUTO-UPDATE...
     getEvents() {
         return {
-            moveend: this.redraw,
-            //zoomend: this.redraw
+            moveend: this.redraw
         };
     },
 
@@ -103,7 +101,6 @@
         // Get map bounds and top, right, bottom and left values.....
         const zoomLevel = this._map.getZoom();
         const bnds = this._map.getBounds();       // Geographical bounds visible in the current map view...
-        //console.log("Map bounds: ", bnds);
 
         ne = bnds.getNorthEast();
         sw = bnds.getSouthWest();
@@ -126,8 +123,6 @@
           xr = parseInt(this._map.latLngToLayerPoint(ne).x) + 100;
           yt = parseInt(this._map.latLngToLayerPoint(ne).y) - 100;
           yb = parseInt(this._map.latLngToLayerPoint(sw).y) + 100;
-          //console.log("Left = " + xl + ", Right = " + xr);
-          //console.log("Top = " + yt + ", Bottom = " + yb);
         }
 
 
@@ -159,19 +154,12 @@
 
         // round iteration limits to the computed grid interval
         // These are lat and long values!!!!!
-        //console.log("Longs: Left = " + lLng + ", Right = " + rLng);
-        //console.log("Lats : Top = " + tLat + ", Bottom = " + bLat);
-        //console.log("---");
         tLat = Math.ceil(tLat / latStep) * latStep;
         rLng = Math.ceil(rLng / lngStep) * lngStep;
         bLat = Math.floor(bLat / latStep) * latStep;
         lLng = Math.floor(lLng / lngStep) * lngStep;
         if (rLng == lLng) lLng += lngStep;
         if (rLng < lLng) rLng += 360.0;
-        //console.log("Longs: Left = " + lLng + ", Right = " + rLng + ", Step = " + lngStep);
-        //console.log("Lats : Top = " + tLat + ", Bottom = " + bLat + ", Step = " + latStep);
-        //console.log("---");
-
 
 
 
@@ -300,29 +288,12 @@
         lLng = sw.lng;
         if (tLat == bLat) { bLat = -90.0; tLat = 90.0; }
         if (lLng == rLng) { lLng = -180.0; rLng = 180.0; }
-        //console.log("Left = " + lLng + ", Right = " + rLng);
 
         // Get viewport bounds.....
         var zoomLevel = this._map.getZoom();
         if (zoomLevel < 3) {
           return;
-        } /* else {
-          // These never change, either on zoom or pan...
-//          xl = parseInt(this._map.latLngToContainerPoint(sw).x);
-//          xr = parseInt(this._map.latLngToContainerPoint(ne).x);
-//          yt = parseInt(this._map.latLngToContainerPoint(ne).y);
-//          yb = parseInt(this._map.latLngToContainerPoint(sw).y);
-
-          // These change ONLY on pan...
-          xl = parseInt(this._map.latLngToLayerPoint(sw).x);
-          xr = parseInt(this._map.latLngToLayerPoint(ne).x);
-          yt = parseInt(this._map.latLngToLayerPoint(ne).y);
-          yb = parseInt(this._map.latLngToLayerPoint(sw).y);
-        }
-        //console.log("Left = " + xl + ", Right = " + xr);   */
-
-
-
+        } 
 
 
         // Which texts, and when to draw them, depends on the zoom level.....
@@ -391,7 +362,6 @@
 
 
 
-
         // Locator texts - locator position is actually the southwest
         // corner of the locator box, but the text div is constructed
         // from its' top-left (northwest) corner.....................
@@ -444,7 +414,7 @@
 
 
             // Add tinyShift to guarantee a position within the block.....
-            locStr = getLocatorStringFromCoordinates(iLt + tinyShift, iLg + tinyShift*2, locAccuracy);
+            locStr = this._locStringFromCoordinates(iLt + tinyShift, iLg + tinyShift*2, locAccuracy);
 
 
             if ((locStr.substr(0, 1) == "S") || (locStr.substr(1, 1) == "S")) {
@@ -474,7 +444,6 @@
               if (locAccuracy == 6) {
                 dummy = 1;
               }
-              //console.log("divX = " + divX + ", divY = " + divY);
 
 
               // But only create texts which will be visible in the viewport (ytop < ybottom).....
@@ -483,17 +452,11 @@
 //              if ( (cenX >= (xl - 400)) && (cenX <= (xr + 400)) ) {
 //                if ( (cenY >= (yt - 400)) && (cenY <= (yb + 400)) ) {
 
-
-
                   // To avoid the problems of having locator strings like "=N", ">N", "?N", "@N", etc.,
                   // which we get at the +180° / -180° date line, we check the string first...
                   if (locStr.substr(0, 1).match(/[A-R]/g)) {
-
                     label = this._addLabel(divX, divY, w, h, locStr, zoomLevel);
-
                   }
-
-
 
 //                }
 //              }
@@ -516,7 +479,6 @@
         div.style.position = "absolute";
     },
 
-
     /******************************************************/
     _addLngLine(lineX, yt, yb, thk) {
         const div = L.DomUtil.create('div', 'xxx', this._container);
@@ -528,7 +490,6 @@
         div.style.opacity = 0.3;
         div.style.position = "absolute";
     },
-
 
     /******************************************************/
     _addLabel(x, y, w, h, locStr, zl) {
@@ -552,29 +513,7 @@
         }
 
         let txtTop = (h - (1.333 * fs)) / 2;
-        //console.log("Height: ", h);
 
-
-        /*  // Using a new L.marker...
-        //let lblPos = [lat, lng];
-        let pt = this._map.layerPointToContainerPoint([x, y]);
-        let lblPos = this._map.containerPointToLatLng([pt.x, pt.y]);
-        let lblHTML = '<div style="color:' + mapLocatorGridColor + '; font-family: Tahoma, Arial, Helvetica, sans-serif; font-weight:600; font-size:' + fs + 'px; text-align:center; padding-top:' + txtTop + 'px; width:' + w + 'px; height:' + h + 'px; border:3px solid red; opacity:0.8;">' + locStr + '</div>';
-        label = L.marker(lblPos, {
-          interactive: false,
-          icon: L.divIcon({
-            //className: "locator-grid-label",
-            //html: locStr,
-            html: lblHTML,
-            iconAnchor: [0, 0],     // top-left corner...
-            iconSize: null
-          }),
-        });   */
-
-
-        console.log("x = " + x + ", y = " + y);
-
-        // Using L.DomUtil div...
         const label = L.DomUtil.create('div', 'locator-grid-label', this._container);
         label.style.fontSize = this._npx(fs);
         label.style.left = this._npx(x);
@@ -584,16 +523,74 @@
         label.innerHTML = locStr;
         label.style.color = mapLocatorGridColor;
 
-        //return label;
-
     },
 
+    /******************************************************/
+      _locStringFromCoordinates(_lat, _lng, _acc) {
+    
+        // Coordinates in decimal degrees..........
+        var lng = parseFloat(_lng) + 180.0;  // Range: 0° - 359.99999°
+        var lat = parseFloat(_lat) + 90.0;   // Range: 0° - 179.99999°
+    
+        // Generate "field" characters (e.g. "JN").......
+        var fldNum1 = Math.floor(lng / 20);
+        var fldNum2 = Math. floor(lat / 10);
+        var startStr = "A";
+        var startIndx = startStr.charCodeAt(0);
+        var field1 = String.fromCharCode(fldNum1 + startIndx);
+        var field2 = String.fromCharCode(fldNum2 + startIndx);
+        lng = lng - (fldNum1 * 20);   // Range now down to: 0° - 19.99999°
+        lat = lat - (fldNum2 * 10);    // Range now down to: 0° - 9.99999°
+    
+        // Generate "square" numbers (e.g. "57")........
+        var square1 = Math.floor(lng / 2);
+        var square2 = Math.floor(lat);
+        lng = lng - (square1 * 2);    // Range now down to: 0° - 1.99999°
+        lat = lat - square2;           // Range now down to: 0° - 0.99999°
+    
+        // Generate "subsquare" characters (e.g. "ur").......
+        lng = lng * 60;  // Convert rest to minutes (now 0 to 120 minutes)
+        lat = lat * 60;   //    ..    ..  ..    ..  (now 0 to 60 minutes)
+        var ssNum1 = Math.floor(lng / 5);
+        var ssNum2 = Math.floor(lat / 2.5);
+        startStr = "a";
+        startIndx = startStr.charCodeAt(0);
+        var subSquare1 = String.fromCharCode(ssNum1 + startIndx);
+        var subSquare2 = String.fromCharCode(ssNum2 + startIndx);
+        lng = lng - (ssNum1 * 5);     // Range now down to: 0' - 4.99999'
+        lat = lat - (ssNum2 * 2.5);    // Range now down to: 0' - 2.49999'
+        var locStr = field1.concat(field2, String(square1), String(square2), subSquare1, subSquare2);
+    
+        locStr = locStr.substr(0, _acc);
+    
+        if (_acc > 6) {
+    
+          // Generate extended locator numbers (e.g. "61")........
+          lng *= 60;  // Convert rest to seconds (now 0 to 300 seconds)
+          lat *= 60;   //    ..    ..  ..    ..  (now 0 to 150 seconds)
+          var exNum1 = Math.floor(lng / 30);
+          var exNum2 = Math.floor(lat / 15);
+          //lng = lng - (exNum1 * 30);     // Range now down to: 0" - 29.99999"
+          //lat = lat - (exNum2 * 15);    // Range now down to: 0" - 14.99999"
+          locStr = locStr.concat(String(exNum1), String(exNum2));
+    
+          /* if (_acc > 8) {
+    
+            // Generate further extended characters (e.g. "IU").......
+            var exChar1 = String.fromCharCode(Math.floor(lng / (30 / 24)) + startIndx);
+            var exChar2 = String.fromCharCode(Math.floor(lat / (15 / 24)) + startIndx);
+            locStr = locStr.concat(exChar1, exChar2);
+          }  */
+        }
+    
+        return locStr;
+
+    },
 
     /******************************************************/
     _latLngToPixel(lat, lng) {
         return this._map.latLngToLayerPoint([lat, lng]);
     },
-
 
     /******************************************************/
     _eqE(a, b, e) {
@@ -606,12 +603,10 @@
         return false;
     },
 
-
     /******************************************************/
     _npx(n) {
         return n.toString() + 'px';
     }
-
 
   });
 
@@ -619,4 +614,5 @@
   L.locatorGrid = function () {
     return new L.LocatorGrid();
   };
+
 
