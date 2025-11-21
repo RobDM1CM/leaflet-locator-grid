@@ -3,7 +3,7 @@ Leaflet-based Maidenhead / Locator Grid with automatic level-of-detail switching
 
 A lightweight, dependency-free Leaflet plugin for drawing Maidenhead (locator) grid lines and labels, with automatic level-of-detail switching.
 
-Designed for radio amateurs, SOTA/IOTA mapping, portable-ops tools, contesting, and general QTH visualization.
+Designed for radio amateurs, SOTA/GMA/POTA/IOTA mapping, portable-ops tools, contesting, and general QTH visualization.
 
 ## Features
 
