@@ -30,15 +30,21 @@ Designed for radio amateurs, SOTA/GMA/POTA/IOTA mapping, portable-ops tools, con
 
 Add the grid directly to the map:
 ```
+var gridOptions = { color: "#00a",
+                    opacity: 0.4
+                  };
 var map = L.map('map', { });
-const locGrid = new LocatorGrid();
+const locGrid = new LocatorGrid(gridOptions);
 locGrid.addTo(map);
 ```
 
 Add the grid as an overlay in ```L.control.layers```:
 ```
 var map = L.map('map', { });
-const locGrid = new LocatorGrid();
+var gridOptions = { color: "#00a",
+                    opacity: 0.4
+                  };
+const locGrid = new LocatorGrid(gridOptions);
 ...
 ...
 var baseMaps = {
