@@ -1,0 +1,25 @@
+
+
+  /***  CSS for Maidenhead Locator Grid Layer  ***/
+
+
+  .locator-grid-layer {
+
+
+   }
+  .leaflet-latlng_line {
+    background-color: #003471;
+    opacity: 0.3;
+    position: "absolute";
+  }
+  .locator-grid-label {
+    color: #003471;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    /*border:3px solid red;*/
+    opacity: 0.4;
+    position: absolute;
+  }
+
